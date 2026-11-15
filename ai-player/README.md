@@ -56,8 +56,17 @@ AI Player support is off by default and is switched on per module.
 1. Open a module, then choose **File > Preferences** in the game window.
 2. Open the **AI Player** tab and tick **Enable AI Player (experimental)**.
 3. An **AI Player** button appears in the toolbar, after the Undo and Step
-   buttons. Clicking it prints the AI Player status in the chat area.
+   buttons. Clicking it opens a small menu:
+   - **Show status** prints the AI Player status in the chat area.
+   - **Show what the AI sees** opens a window that describes the game as
+     plain text: the module, the sides and players, then every map with its
+     boards and each piece with the name of its location. **Refresh** reads
+     the game again after you move something.
 4. Untick the box to hide the button again. The choice is remembered.
+
+The text shows pieces the way you see them: a masked piece gives only the name
+its mask shows, a piece hidden from you is left out, and decks show a count
+rather than their contents. Stage 3 extends this to viewing from any one side.
 
 ## When something goes wrong
 
@@ -97,7 +106,7 @@ Each stage ends with something you can see and try in the running application.
 |---|---|---|
 | 0 | Build and launch locally | The development copy starts and opens a module (done) |
 | 1 | AI Player switch | An "AI Player" preferences tab and a toolbar button that appear only when enabled (done) |
-| 2 | Read the game | A "Show what the AI sees" window listing maps, pieces and locations as text |
+| 2 | Read the game | A "Show what the AI sees" window listing maps, pieces and locations as text (done) |
 | 3 | Respect hidden information | The same window, viewed from one side, hides masked and private pieces |
 | 4 | Watch the game | A live event list: "X moved from A to B", chat lines, dice |
 | 5 | Act on the game | Test buttons that move a piece or run a piece command without the mouse |

@@ -23,15 +23,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JPopupMenu;
 
 /**
  * Entry point for AI-player support. The bridge is the single place where an
  * external AI agent will be able to observe the game and act on it.
  *
  * The bridge is always constructed with the module but does nothing unless
- * the player switches it on in the preferences. For now it only provides
- * that switch and a toolbar button; later stages hang state export, events
- * and actions off this class.
+ * the player switches it on in the preferences. For now it provides that
+ * switch and a toolbar button whose menu reports the status and shows the
+ * game as the AI sees it; later stages hang events and actions off this class.
  */
 public class AgentBridge {
   /** Key of the per-module preference that switches AI-player support on. */
@@ -39,6 +40,7 @@ public class AgentBridge {
 
   private BooleanConfigurer enabledConfig;
   private JButton button;
+  private AgentStateWindow stateWindow;
 
   /**
    * Registers the AI Player preference and toolbar button with the module.
@@ -50,16 +52,20 @@ public class AgentBridge {
     );
     mod.getPrefs().addOption(Resources.getString("AgentBridge.tab"), enabledConfig); //NON-NLS
 
-    final Action statusAction = new AbstractAction(Resources.getString("AgentBridge.button")) { //NON-NLS
+    final JPopupMenu menu = new JPopupMenu();
+    menu.add(Resources.getString("AgentBridge.menu_status")).addActionListener(e -> showStatus()); //NON-NLS
+    menu.add(Resources.getString("AgentBridge.menu_show_state")).addActionListener(e -> showState()); //NON-NLS
+
+    final Action menuAction = new AbstractAction(Resources.getString("AgentBridge.button")) { //NON-NLS
       private static final long serialVersionUID = 1L;
 
       @Override
       public void actionPerformed(ActionEvent e) {
-        showStatus();
+        menu.show(button, 0, button.getHeight());
       }
     };
 
-    button = mod.getToolBar().add(statusAction);
+    button = mod.getToolBar().add(menuAction);
     button.setFocusable(false); // must not steal keystrokes from the map
     button.setToolTipText(Resources.getString("AgentBridge.button_tooltip")); //NON-NLS
     button.setAlignmentY((float) 0.0);
@@ -76,5 +82,15 @@ public class AgentBridge {
   /** Reports the current state of the bridge in the chat window. */
   protected void showStatus() {
     GameModule.getGameModule().warn(Resources.getString("AgentBridge.status_not_connected")); //NON-NLS
+  }
+
+  /** Opens the "Show what the AI sees" window, reading the game afresh each time. */
+  protected void showState() {
+    if (stateWindow == null) {
+      stateWindow = new AgentStateWindow(GameModule.getGameModule().getPlayerWindow());
+    }
+    stateWindow.refresh();
+    stateWindow.setVisible(true);
+    stateWindow.toFront();
   }
 }
