@@ -49,6 +49,16 @@ open that module straight away.
 Close the windows normally when you are done. Close all development windows
 before running `build.bat` again.
 
+## Trying the AI Player features
+
+AI Player support is off by default and is switched on per module.
+
+1. Open a module, then choose **File > Preferences** in the game window.
+2. Open the **AI Player** tab and tick **Enable AI Player (experimental)**.
+3. An **AI Player** button appears in the toolbar, after the Undo and Step
+   buttons. Clicking it prints the AI Player status in the chat area.
+4. Untick the box to hide the button again. The choice is remembered.
+
 ## When something goes wrong
 
 - **"The development build was not found"** — run `build.bat` first.
@@ -71,7 +81,7 @@ Each stage ends with something you can see and try in the running application.
 | # | Stage | What you will be able to see |
 |---|---|---|
 | 0 | Build and launch locally | The development copy starts and opens a module (done) |
-| 1 | AI Player switch | An "AI Player" preferences tab and a toolbar button that appear only when enabled |
+| 1 | AI Player switch | An "AI Player" preferences tab and a toolbar button that appear only when enabled (done) |
 | 2 | Read the game | A "Show what the AI sees" window listing maps, pieces and locations as text |
 | 3 | Respect hidden information | The same window, viewed from one side, hides masked and private pieces |
 | 4 | Watch the game | A live event list: "X moved from A to B", chat lines, dice |

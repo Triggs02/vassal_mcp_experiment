@@ -18,6 +18,7 @@
 package VASSAL.build;
 
 import VASSAL.Info;
+import VASSAL.agent.AgentBridge;
 import VASSAL.build.module.AnimatedDiceButton;
 import VASSAL.build.module.BasicCommandEncoder;
 import VASSAL.build.module.BasicLogger;
@@ -423,6 +424,11 @@ public class GameModule extends AbstractConfigurable
   private Logger logger;
 
   /**
+   * Support for an external AI agent playing a side. Does nothing unless enabled in the preferences.
+   */
+  private AgentBridge agentBridge;
+
+  /**
    * The Chat Log window
    */
   private Chatter chat;
@@ -781,6 +787,7 @@ public class GameModule extends AbstractConfigurable
     initRecentGamesMenu();
     initGameState();
     initLogger();
+    initAgentBridge();
     initServer();
     initDebug();
     new PluginsLoader().addTo(this);
@@ -902,6 +909,21 @@ public class GameModule extends AbstractConfigurable
     logger = new BasicLogger();
     ((BasicLogger) logger).build(null);
     ((BasicLogger) logger).addTo(this);
+  }
+
+  /**
+   * Initialize the bridge that lets an external AI agent play a side.
+   */
+  private void initAgentBridge() {
+    agentBridge = new AgentBridge();
+    agentBridge.addTo(this);
+  }
+
+  /**
+   * @return the bridge through which an external AI agent observes and acts on the game
+   */
+  public AgentBridge getAgentBridge() {
+    return agentBridge;
   }
 
   /**
