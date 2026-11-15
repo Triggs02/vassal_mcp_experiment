@@ -74,6 +74,21 @@ AI Player support is off by default and is switched on per module.
 - `ai-player/main` collects finished stages. Each stage is developed on its own
   branch and merged here once it has been tried out.
 
+## Design rule: this is an engine feature, not a Circus Maximus feature
+
+AI Player support must work with any module. Circus Maximus is only the module
+used for testing.
+
+- Engine code never mentions a specific game, piece, property or rule.
+- Everything the AI reads (maps, pieces, properties, commands) comes from what
+  VASSAL already knows about any loaded module.
+- Game-specific knowledge lives in a **module AI profile**. A module author can
+  ship one inside the `.vmod`, so the module itself tells the AI how the game
+  works. A profile in a local folder can add to or replace it, for content that
+  cannot be distributed with the module.
+- A module with no profile still works: the AI can see and act, it just has
+  not been told the rules.
+
 ## Stages
 
 Each stage ends with something you can see and try in the running application.
@@ -90,4 +105,4 @@ Each stage ends with something you can see and try in the running application.
 | 7 | Connect Claude | Claude can read the game and make a move through the bridge |
 | 8 | Turn hand-off and thinking display | "Hand turn to AI" button, "thinking" banner, stop button |
 | 9 | Difficulty and play style | Difficulty levels and aggressive / docile / strategic settings |
-| 10 | Module rules profile | A per-module file that teaches the AI the rules of that game |
+| 10 | Module AI profile | A profile format any module can ship inside its `.vmod` (or supply from a local folder) that teaches the AI the rules of that game |
